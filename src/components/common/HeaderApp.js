@@ -27,6 +27,10 @@ function HeaderApp() {
             label: <Link to="/users/logout">Logout</Link>,
         } : '',
         isAuthenticated ? {
+            key: 'create book',
+            label: <Link to="/books/create">Create book</Link>,
+        } : '',
+        isAuthenticated ? {
             key: 'profile',
             label: <Link to={{ pathname: `/users/${user.userId}/profile` }}>Profile</Link>,
         } : '',

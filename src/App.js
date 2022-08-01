@@ -1,5 +1,6 @@
 import BookList from './components/books/BookList';
 import BookDetails from './components/books/BookDetails';
+import BookCreate from './components/books/BookCreate'
 import HeaderApp from './components/common/HeaderApp';
 import FooterApp from './components/common/FooterApp';
 import Register from './components/users/Register';
@@ -34,6 +35,7 @@ function App() {
 					<Routes>
 						<Route path="/" element={<BookList />} />
 						<Route path="/books/catalog/:category" element={<BookList />} />
+						<Route path="/books/create" element={<BookCreate />} />
 						<Route path="/books/:bookId/details" element={<BookDetails />} />
 						<Route path="/users/register" element={<Register />} />
 						<Route path="/users/login" element={<Login />} />
