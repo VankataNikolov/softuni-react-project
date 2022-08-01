@@ -3,21 +3,21 @@ import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 
 import { Button, Form, Input } from 'antd';
-import React from 'react';
 
 import * as authService from '../../services/authService';
 
-function Login() {
+
+function Register() {
 
     const navigate = useNavigate();
-    const { userLogin } = useContext(AuthContext);
+    const {userLogin} = useContext(AuthContext);
 
     const onFinish = async (values) => {
         const {username, password} = values;
-
-        const response = await authService.login(username, password);
-        const user = await response.json();
         
+        const response = await authService.register(username, password);
+        const user = await response.json();
+
         userLogin(user);
 
         navigate("/", { replace: true });
@@ -26,9 +26,10 @@ function Login() {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
     return (
         <Form
-            name="login"
+            name="register"
             labelCol={{
                 span: 8,
             }}
@@ -47,6 +48,10 @@ function Login() {
                         required: true,
                         message: 'Please input your username!',
                     },
+                    {
+                        min: 4,
+                        message: 'Username must be 4 characters at least'
+                    }
                 ]}
             >
                 <Input />
@@ -60,6 +65,27 @@ function Login() {
                         required: true,
                         message: 'Please input your password!',
                     },
+                    {
+                        min: 6,
+                        message: 'Password must be 6 characters at least'
+                    }
+                ]}
+            >
+                <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+                label="Confirm password"
+                name="confirm password"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your password!',
+                    },
+                    {
+                        min: 6,
+                        message: 'Password must be 6 characters at least'
+                    }
                 ]}
             >
                 <Input.Password />
@@ -79,4 +105,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Register;
