@@ -32,8 +32,7 @@ function BookCreate() {
         };
 
 
-        const response = await bookService.create(bookData, userId, accessToken);
-        const newBook = await response.json();
+        const response = await bookService.create(bookData, accessToken);
 
         navigate("/");
     };
