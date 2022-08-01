@@ -47,6 +47,10 @@ function Login() {
                         required: true,
                         message: 'Please input your username!',
                     },
+                    {
+                        min: 4,
+                        message: 'Username must be 4 characters at least'
+                    }
                 ]}
             >
                 <Input />
@@ -60,6 +64,10 @@ function Login() {
                         required: true,
                         message: 'Please input your password!',
                     },
+                    {
+                        min: 6,
+                        message: 'Password must be 6 characters at least',
+                    }
                 ]}
             >
                 <Input.Password />
