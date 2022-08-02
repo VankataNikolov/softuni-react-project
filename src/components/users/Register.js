@@ -10,11 +10,11 @@ import * as authService from '../../services/authService';
 function Register() {
 
     const navigate = useNavigate();
-    const {userLogin} = useContext(AuthContext);
+    const { userLogin } = useContext(AuthContext);
 
     const onFinish = async (values) => {
-        const {username, password} = values;
-        
+        const { username, password } = values;
+
         const response = await authService.register(username, password);
         const user = await response.json();
 

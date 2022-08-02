@@ -5,7 +5,7 @@ export const AuthContext = createContext({});
 let userDefault = {
 	username: '',
 	accessToken: '',
-	userId: ''
+	_id: ''
 }
 
 function AuthProvider ({
@@ -14,11 +14,9 @@ function AuthProvider ({
     const [auth, setAuth] = useState(userDefault);
 
     const userLogin = (authData) => {
-        setAuth({
-            username: authData.username,
-            accessToken: authData.accessToken,
-            userId: authData._id
-        });
+        
+        setAuth(authData);
+
     };
 
     const userLogout = () => {
@@ -30,8 +28,9 @@ function AuthProvider ({
             user: auth,
             userLogin,
             userLogout,
-            isAuthenticated: !!auth.accessToken
+            isAuthenticated: auth.accessToken.length > 0
         }}>
+            <h1>{auth.username}</h1>
             {children}
         </AuthContext.Provider>  
     );

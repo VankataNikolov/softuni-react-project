@@ -16,9 +16,9 @@ function Login() {
         const {username, password} = values;
 
         const response = await authService.login(username, password);
-        const user = await response.json();
+        const authData = await response.json();
         
-        userLogin(user);
+        userLogin(authData);
 
         navigate("/", { replace: true });
     };
