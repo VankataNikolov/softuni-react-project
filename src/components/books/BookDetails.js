@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
-import { EditOutlined, CommentOutlined, LikeOutlined } from '@ant-design/icons';
+import CommentList from '../comments/CommentList';
+import CommentCreate from '../comments/CommentCreate';
+
+import { EditOutlined, LikeOutlined } from '@ant-design/icons';
 import { Card, Space } from 'antd';
 const { Meta } = Card;
 
@@ -9,7 +13,9 @@ function BookDetails() {
 
     const { bookId } = useParams();
     const [book, setBook] = useState({});
-    const [comments, setComments] = useState({});
+    const [comments, setComments] = useState([]);
+
+    const { isAuthenticated } = useContext(AuthContext);
 
     useEffect(() => {
         fetch(`http://localhost:5000/books/${bookId}`)
@@ -20,49 +26,61 @@ function BookDetails() {
             });
     }, [bookId])
 
-    return (
-        <Space
-            direction="horizontal"
-            size="middle"
-            align="start"
-            style={{ display: 'flex', justifyContent: 'center' }}
-        >
-            <div className="site-card-border-less-wrapper">
-                <Card
-                    cover={
-                        <img
-                            alt={book.title}
-                            src={book.imageUrl}
-                        />
-                    }
-                    bordered={false}
-                    style={{
-                        width: 250,
-                    }}
-                >
-                    <p>Автор: {book.author}</p>
-                    <p>Година на издаване: {book.year}</p>
-                    <p>Публикувал: </p>
-                    <p>Коментари: {comments.length}</p>
-                </Card>
-            </div>
-            <Card
-                style={{
-                    width: 700,
-                }}
-                actions={[
-                    <LikeOutlined key="like" />,
-                    <CommentOutlined key="comment" />,
-                    <EditOutlined key="edit" />,
-                ]}
-            >
-                <Meta
-                    title={book.title}
-                    description={book.description}
-                />
-            </Card>
+    function handleAddComment(newComment) {
+        setComments(oldVal => [...oldVal, newComment]);
+    }
 
-        </Space>
+    return (
+        <>
+            <Space
+                direction="horizontal"
+                size="middle"
+                align="start"
+                style={{ display: 'flex', justifyContent: 'center' }}
+            >
+                <div className="site-card-border-less-wrapper">
+                    <Card
+                        cover={
+                            <img
+                                alt={book.title}
+                                src={book.imageUrl}
+                            />
+                        }
+                        bordered={false}
+                        style={{
+                            width: 220,
+                        }}
+                    >
+                        <p>Автор: {book.author}</p>
+                        <p>Година на издаване: {book.year}</p>
+                        <p>Публикувал: {book.owner?.username}</p>
+                    </Card>
+                </div>
+                <Card
+                    style={{
+                        width: 700,
+                    }}
+                // actions={[
+                //     <LikeOutlined key="like" />,
+                //     <CommentCreate />,
+                //     <EditOutlined key="edit" />,
+                // ]}
+
+                >
+                    <Meta
+                        title={book.title}
+                        description={book.description}
+                    />
+                    {isAuthenticated
+                        && <CommentCreate
+                            bookId={bookId}
+                            handleAddComment={handleAddComment}
+                        />}
+                </Card>
+
+            </Space>
+            <CommentList comments={comments} />
+        </>
     );
 }
 
