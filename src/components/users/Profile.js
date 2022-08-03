@@ -1,19 +1,37 @@
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
+import BookList from '../books/BookList';
 
+import * as userService from '../../services/userService'
 
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
 
 function Profile() {
+
+    const [myBooks, setMyBooks] = useState([]);
+    const [likedBooks, setLikedBooks] = useState([]);
+
+    const { user } = useContext(AuthContext);
+    const userId = user._id;
+    const accessToken = user.accessToken;
+
+    useEffect(() => {
+        userService.getMyStuff(userId, accessToken)
+            .then(res => res.json())
+            .then(data => {
+                setMyBooks(data.books);
+                setLikedBooks(data.likedBooks);
+            })
+    }, [])
+
     return (
         <Tabs defaultActiveKey="1" centered>
             <TabPane tab="моите книги" key="1">
-                Content of Tab Pane 1
+                <BookList books={myBooks} />
             </TabPane>
-            <TabPane tab="моите коментари" key="2">
-                Content of Tab Pane 2
-            </TabPane>
-            <TabPane tab="харесани книги" key="3">
-                Content of Tab Pane 3
+            <TabPane tab="харесани книги" key="2">
+                <BookList books={likedBooks} />
             </TabPane>
         </Tabs>
     );
