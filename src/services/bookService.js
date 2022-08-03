@@ -16,3 +16,19 @@ export const create = async (bookData, accessToken) => {
         console.log(error);
     }
 }
+
+export const like = async (user, bookId) => {
+    try {
+        const response = await fetch(`${baseUrl}/${bookId}/like`, {
+            method: 'POST',
+            headers: {
+                'X-Authorization': user.accessToken,
+                'content-type': 'application/json'
+            },
+        });
+
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
