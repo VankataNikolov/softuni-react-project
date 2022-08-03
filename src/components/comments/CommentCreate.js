@@ -3,6 +3,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 import * as commentService from '../../services/commentService';
 
+import { CommentOutlined } from '@ant-design/icons';
 import { Button, Modal, Form, Input } from 'antd';
 const { TextArea } = Input;
 
@@ -48,7 +49,7 @@ function CommentCreate({
 
     return (
         <>
-            <Button type="primary" onClick={showModal}>
+            <Button type="primary" icon={<CommentOutlined />} onClick={showModal}>
                 коментар
             </Button>
             <Modal
