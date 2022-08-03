@@ -10,7 +10,7 @@ function Book({ book }) {
             <Card
                 hoverable
                 style={{
-                    width: 250,
+                    width: 220,
                 }}
                 cover={
                     <img

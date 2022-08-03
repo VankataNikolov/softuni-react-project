@@ -2,10 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
+import Like from './Like';
 import CommentList from '../comments/CommentList';
 import CommentCreate from '../comments/CommentCreate';
 
-import { EditOutlined, LikeOutlined } from '@ant-design/icons';
+import { HeartFilled } from '@ant-design/icons';
 import { Card, Space } from 'antd';
 const { Meta } = Card;
 
@@ -15,7 +16,7 @@ function BookDetails() {
     const [book, setBook] = useState({});
     const [comments, setComments] = useState([]);
 
-    const { isAuthenticated } = useContext(AuthContext);
+    const { user, isAuthenticated } = useContext(AuthContext);
 
     useEffect(() => {
         fetch(`http://localhost:5000/books/${bookId}`)
@@ -26,9 +27,51 @@ function BookDetails() {
             });
     }, [bookId])
 
+    const userId = user._id;
+
+    const isOwner = book.owner?._id === userId;
+    let isLiked = false;
+    let likes = 0;
+    if (book.likes?.length > 0) {
+        isLiked = book.likes.find(x => x === userId);
+        likes = book.likes.length;
+    }
+
     function handleAddComment(newComment) {
         setComments(oldVal => [...oldVal, newComment]);
     }
+
+    function handleLike(book) {
+        setBook(book);
+    }
+
+    const buttons = (
+        <Space
+            direction="horizontal"
+            size="small"
+            align="start"
+            style={{ display: 'flex', justifyContent: 'start', marginTop: 15 }}
+        >
+            {
+                isAuthenticated
+                && !isOwner
+                && <CommentCreate
+                    bookId={bookId}
+                    handleAddComment={handleAddComment}
+                />
+            }
+            {
+                isAuthenticated
+                && !isLiked
+                && !isOwner
+                && <Like
+                    user={user}
+                    bookId={bookId}
+                    likeHandler={handleLike}
+                />
+            }
+        </Space>
+    );
 
     return (
         <>
@@ -50,6 +93,12 @@ function BookDetails() {
                         style={{
                             width: 220,
                         }}
+                        extra={
+                            <>
+                                <HeartFilled style={{ color: 'green', marginRight: 10 }} />
+                                {likes}
+                            </>
+                        }
                     >
                         <p>Автор: {book.author}</p>
                         <p>Година на издаване: {book.year}</p>
@@ -60,22 +109,12 @@ function BookDetails() {
                     style={{
                         width: 700,
                     }}
-                // actions={[
-                //     <LikeOutlined key="like" />,
-                //     <CommentCreate />,
-                //     <EditOutlined key="edit" />,
-                // ]}
-
                 >
                     <Meta
                         title={book.title}
                         description={book.description}
                     />
-                    {isAuthenticated
-                        && <CommentCreate
-                            bookId={bookId}
-                            handleAddComment={handleAddComment}
-                        />}
+                    {buttons}
                 </Card>
 
             </Space>
