@@ -17,6 +17,23 @@ export const create = async (bookData, accessToken) => {
     }
 }
 
+export const update = async (bookId, bookData, accessToken) => {
+    try {
+        const response = await fetch(`${baseUrl}/${bookId}`, {
+            method: 'PUT',
+            headers: {
+                'X-Authorization': accessToken,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(bookData)
+        });
+
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const like = async (user, bookId) => {
     try {
         const response = await fetch(`${baseUrl}/${bookId}/like`, {

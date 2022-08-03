@@ -1,6 +1,7 @@
 import Home from './components/common/Home';
 import BookDetails from './components/books/BookDetails';
 import BookCreate from './components/books/BookCreate'
+import BookEdit from './components/books/BookEdit';
 import HeaderApp from './components/common/HeaderApp';
 import FooterApp from './components/common/FooterApp';
 import Register from './components/users/Register';
@@ -37,6 +38,7 @@ function App() {
 						<Route path="/books/catalog/:category" element={<Home />} />
 						<Route path="/books/create" element={<BookCreate />} />
 						<Route path="/books/:bookId/details" element={<BookDetails />} />
+						<Route path="/books/:bookId/edit" element={<BookEdit />} />
 						<Route path="/users/register" element={<Register />} />
 						<Route path="/users/login" element={<Login />} />
 						<Route path="/users/:userId/profile" element={<Profile />} />

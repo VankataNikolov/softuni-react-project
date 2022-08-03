@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
 import Like from './Like';
+import EditButton from './EditButton';
 import CommentList from '../comments/CommentList';
 import CommentCreate from '../comments/CommentCreate';
 
@@ -69,6 +70,11 @@ function BookDetails() {
                     bookId={bookId}
                     likeHandler={handleLike}
                 />
+            }
+            {
+                isAuthenticated
+                && isOwner
+                && <EditButton bookId={bookId} />
             }
         </Space>
     );

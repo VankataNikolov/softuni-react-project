@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
 
@@ -12,13 +12,26 @@ import {
 } from 'antd';
 const { TextArea } = Input;
 
-function BookCreate() {
+function BookCreate(props) {
 
+    const [edit, setEdit] = useState(false);
+    const [initialValues, setInitialValues] = useState({});
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [form] = Form.useForm();
 
-    const userId = user._id;
     const accessToken = user.accessToken;
+
+    useEffect(() => {
+        if (props.book) {
+            setEdit(true);
+            setInitialValues(props.book);
+        }
+    }, [props.book])
+
+    useEffect(() => {
+        form.resetFields();
+    }, [initialValues, form])
 
     const onFinish = async (values) => {
 
@@ -31,14 +44,20 @@ function BookCreate() {
             imageUrl: values.imageUrl
         };
 
+        if (edit) {
+            const response = await bookService.update(initialValues._id, bookData, accessToken);
+            const book = await response.json();
+            navigate(`/books/${book._id}/details`);
+        } else {
+            await bookService.create(bookData, accessToken);
+            navigate("/");
+        }
 
-        const response = await bookService.create(bookData, accessToken);
-
-        navigate("/");
     };
 
     return (
         <Form
+            form={form}
             labelCol={{
                 span: 4,
             }}
@@ -46,6 +65,7 @@ function BookCreate() {
                 span: 14,
             }}
             layout="horizontal"
+            initialValues={initialValues}
             onFinish={onFinish}
         >
             <Form.Item
@@ -121,11 +141,7 @@ function BookCreate() {
                     {
                         pattern: /^(?:\d*)$/,
                         message: "Year should be number",
-                    },
-                    {
-                        pattern: /^[\d]{0,2022}$/,
-                        message: "Year should be before 2022",
-                    },
+                    }
                 ]}
             >
                 <Input />
