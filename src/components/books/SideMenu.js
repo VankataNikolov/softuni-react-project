@@ -9,7 +9,6 @@ function SideMenu({
 
     const onClick = (e) => {
         changeCategory(e.key);
-        console.log('click ', e);
         setCurrent(e.key);
     };
 
