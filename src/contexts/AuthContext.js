@@ -30,7 +30,6 @@ function AuthProvider ({
             userLogout,
             isAuthenticated: auth.accessToken.length > 0
         }}>
-            <h1>{auth.username}</h1>
             {children}
         </AuthContext.Provider>  
     );
