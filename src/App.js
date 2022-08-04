@@ -1,3 +1,6 @@
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
 import Home from './components/common/Home';
 import BookDetails from './components/books/BookDetails';
 import BookCreate from './components/books/BookCreate'
@@ -9,12 +12,9 @@ import Login from './components/users/Login';
 import Profile from './components/users/Profile';
 import Logout from './components/users/Logout'
 import AuthProvider from './contexts/AuthContext';
-
-import React from 'react';
+import PrivateRoute from './components/common/PrivateRoute';
 
 import 'antd/dist/antd.css';
-
-import { Routes, Route } from 'react-router-dom';
 
 import { Layout } from 'antd';
 const { Content } = Layout;
@@ -34,15 +34,18 @@ function App() {
 					}}
 				>
 					<Routes>
+						<Route element={<PrivateRoute />}>
+							<Route path="/users/:userId/profile" element={<Profile />} />
+							<Route path="/users/logout" element={<Logout />} />
+							<Route path="/books/create" element={<BookCreate />} />
+							<Route path="/books/:bookId/edit" element={<BookEdit />} />
+						</Route>
 						<Route path="/" element={<Home />} />
 						<Route path="/books/catalog/:category" element={<Home />} />
-						<Route path="/books/create" element={<BookCreate />} />
 						<Route path="/books/:bookId/details" element={<BookDetails />} />
-						<Route path="/books/:bookId/edit" element={<BookEdit />} />
 						<Route path="/users/register" element={<Register />} />
 						<Route path="/users/login" element={<Login />} />
-						<Route path="/users/:userId/profile" element={<Profile />} />
-						<Route path="/users/logout" element={<Logout />} />
+
 					</Routes>
 
 				</Content>
