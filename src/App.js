@@ -14,7 +14,7 @@ import Logout from './components/users/Logout'
 import AuthProvider from './contexts/AuthContext';
 import PrivateRoute from './components/common/PrivateRoute';
 
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 
 import { Layout } from 'antd';
 const { Content } = Layout;
