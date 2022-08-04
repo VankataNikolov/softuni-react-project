@@ -13,6 +13,13 @@ function CommentList({
                 renderItem={(item) => (
                     <li>
                         <Comment
+                            style={{
+                                backgroundColor:'white',
+                                marginBottom: 8,
+                                paddingRight: 10,
+                                paddingLeft: 10,
+                                borderRadius: 10
+                            }}
                             author={item.owner.username}
                             content={item.text}
                             datetime={item.created_at.substring(0, 10)}
