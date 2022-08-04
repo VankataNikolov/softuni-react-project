@@ -15,7 +15,7 @@ function CommentList({
                         <Comment
                             author={item.owner.username}
                             content={item.text}
-                            datetime={item.created_at}
+                            datetime={item.created_at.substring(0, 10)}
                         />
                     </li>
                 )}
