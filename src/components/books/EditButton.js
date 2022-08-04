@@ -14,9 +14,12 @@ function EditButton({
     }
 
     return (
-        (<Button type="primary" icon={<EditOutlined />} onClick={clickHandler}>
+        <Button 
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={clickHandler}>
             промени
-        </Button>)
+        </Button>
     );
 }
 
