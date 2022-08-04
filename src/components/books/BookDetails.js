@@ -6,6 +6,7 @@ import Like from './Like';
 import EditButton from './EditButton';
 import CommentList from '../comments/CommentList';
 import CommentCreate from '../comments/CommentCreate';
+import BookDelete from './BookDelete';
 
 import { HeartFilled } from '@ant-design/icons';
 import { Card, Space } from 'antd';
@@ -39,7 +40,7 @@ function BookDetails() {
     }
 
     function handleAddComment(newComment) {
-        setComments(oldVal => [...oldVal, newComment]);
+        setComments(oldVal => [newComment, ...oldVal]);
     }
 
     function handleLike(book) {
@@ -74,7 +75,11 @@ function BookDetails() {
             {
                 isAuthenticated
                 && isOwner
-                && <EditButton bookId={bookId} />
+                &&
+                <>
+                    <EditButton bookId={bookId} />
+                    <BookDelete user={user} book={book} />
+                </>
             }
         </Space>
     );
@@ -87,30 +92,30 @@ function BookDetails() {
                 align="start"
                 style={{ display: 'flex', justifyContent: 'center' }}
             >
-                <div className="site-card-border-less-wrapper">
-                    <Card
-                        cover={
-                            <img
-                                alt={book.title}
-                                src={book.imageUrl}
-                            />
-                        }
-                        bordered={false}
-                        style={{
-                            width: 220,
-                        }}
-                        extra={
-                            <>
-                                <HeartFilled style={{ color: 'green', marginRight: 10 }} />
-                                {likes}
-                            </>
-                        }
-                    >
-                        <p>Автор: {book.author}</p>
-                        <p>Година на издаване: {book.year}</p>
-                        <p>Публикувал: {book.owner?.username}</p>
-                    </Card>
-                </div>
+                <Card
+                    cover={
+                        <img
+                            alt={book.title}
+                            src={book.imageUrl}
+                        />
+                    }
+                    bordered={false}
+                    style={{
+                        width: 200,
+                    }}
+                    extra={
+                        <>
+                            <HeartFilled style={{ color: 'green', marginRight: 10 }} />
+                            {likes}
+                        </>
+                    }
+                >
+                </Card>
+                <Card>
+                    <p>Автор: {book.author}</p>
+                    <p>Година на издаване: {book.year}</p>
+                    <p>Публикувал: {book.owner?.username}</p>
+                </Card>
                 <Card
                     style={{
                         width: 700,
@@ -122,9 +127,15 @@ function BookDetails() {
                     />
                     {buttons}
                 </Card>
-
             </Space>
-            <CommentList comments={comments} />
+            <Space
+                direction="vertical"
+                size="middle"
+                align="center"
+                style={{ display: 'flex', justifyContent: 'center' }}
+            >
+                <CommentList comments={comments} />
+            </Space>
         </>
     );
 }
