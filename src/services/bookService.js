@@ -49,3 +49,18 @@ export const like = async (user, bookId) => {
         console.log(error);
     }
 }
+
+export const deleteBook = async (user, bookId) => {
+    try {
+        const response = await fetch(`${baseUrl}/${bookId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-Authorization': user.accessToken,
+            },
+        });
+
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
