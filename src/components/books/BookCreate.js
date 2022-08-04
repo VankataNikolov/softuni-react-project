@@ -104,7 +104,14 @@ function BookCreate(props) {
 
             <Form.Item
                 label="Категория"
-                name="category">
+                name="category"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please select category',
+                    }
+                ]}
+            >
                 <Select>
                     <Select.Option value="technology">Технологии</Select.Option>
                     <Select.Option value="children">За деца</Select.Option>
