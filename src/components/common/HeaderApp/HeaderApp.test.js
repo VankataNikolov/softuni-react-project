@@ -34,19 +34,19 @@ describe('show / not show buttons for guest users', () => {
     test('don\'t show Profile button', () => {
 
         const element = screen.queryByText('Profile');
-        expect(element).not.toBeInTheDocument();
+        expect(element).toBeNull;
     });
 
     test('don\'t show Create book button', () => {
 
         const element = screen.queryByText('Create book');
-        expect(element).not.toBeInTheDocument();
+        expect(element).toBeNull;
     });
 
     test('don\'t show Logout button', () => {
 
         const element = screen.queryByText('Logout');
-        expect(element).not.toBeInTheDocument();
+        expect(element).toBeNull;
     });
 
 });
@@ -83,12 +83,12 @@ describe('show / not show buttons for authenticated users', () => {
     test('dont\'t show Login button', () => {
 
         const element = screen.queryByText('Login');
-        expect(element).not.toBeInTheDocument();
+        expect(element).toBeNull;
     });
 
     test('don\'t show Register button', () => {
 
         const element = screen.queryByText('Register');
-        expect(element).not.toBeInTheDocument();
+        expect(element).toBeNull;
     });
 })
