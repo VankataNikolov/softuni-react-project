@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import BookList from '../books/BookList';
+import BookList from '../books/BookList/BookList';
 
 import * as userService from '../../services/userService'
 
@@ -23,7 +23,7 @@ function Profile() {
                 setMyBooks(data.books);
                 setLikedBooks(data.likedBooks);
             })
-    }, [])
+    }, [userId, accessToken])
 
     return (
         <Tabs defaultActiveKey="1" centered>
