@@ -80,7 +80,7 @@ describe('show / not show buttons for authenticated users', () => {
         expect(element).toBeInTheDocument();
     });
 
-    test('dont\'t show Login button', () => {
+    test('don\'t show Login button', () => {
 
         const element = screen.queryByText('Login');
         expect(element).toBeNull;
