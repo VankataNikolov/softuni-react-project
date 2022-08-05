@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import HeaderApp from './HeaderApp';
@@ -16,18 +15,18 @@ describe('show / not show buttons for guest users', () => {
         );
     });
 
-    test('show Login button', () => {
-        const element = screen.getByText('Login');
+    test('show Login button', async () => {
+        const element = await screen.findByText('Login');
         expect(element).toBeInTheDocument();
     });
 
-    test('show Register button', () => {
-        const element = screen.getByText('Register');
+    test('show Register button', async () => {
+        const element = await screen.findByText('Register');
         expect(element).toBeInTheDocument();
     });
 
-    test('show Home button', () => {
-        const element = screen.getByText('Home');
+    test('show Home button', async () => {
+        const element = await screen.findByText('Home');
         expect(element).toBeInTheDocument();
     });
 
@@ -62,21 +61,21 @@ describe('show / not show buttons for authenticated users', () => {
         );
     });
 
-    test('show Profile button', () => {
+    test('show Profile button', async () => {
 
-        const element = screen.getByText('Profile');
+        const element = await screen.findByText('Profile');
         expect(element).toBeInTheDocument();
     });
 
-    test('show Create book button', () => {
+    test('show Create book button', async () => {
 
-        const element = screen.getByText('Create book');
+        const element = await screen.findByText('Create book');
         expect(element).toBeInTheDocument();
     });
 
-    test('show Logout button', () => {
+    test('show Logout button', async () => {
 
-        const element = screen.getByText('Logout');
+        const element = await screen.findByText('Logout');
         expect(element).toBeInTheDocument();
     });
 
