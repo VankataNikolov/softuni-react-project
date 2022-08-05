@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from './components/common/Home';
-import BookDetails from './components/books/BookDetails';
+import BookDetails from './components/books/BookDetails/BookDetails';
 import BookCreate from './components/books/BookCreate'
 import BookEdit from './components/books/BookEdit';
 import HeaderApp from './components/common/HeaderApp/HeaderApp';
