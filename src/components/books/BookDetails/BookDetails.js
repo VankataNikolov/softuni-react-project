@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AuthContext } from '../../../contexts/AuthContext';
 
-import Like from './Like';
-import EditButton from './EditButton';
-import CommentList from '../comments/CommentList';
-import CommentCreate from '../comments/CommentCreate';
-import BookDelete from './BookDelete';
+import Like from '../Like';
+import EditButton from '../EditButton';
+import CommentList from '../../comments/CommentList';
+import CommentCreate from '../../comments/CommentCreate';
+import BookDelete from '../BookDelete';
+
+import * as bookService from '../../../services/bookService';
 
 import { HeartFilled } from '@ant-design/icons';
 import { Card, Space } from 'antd';
@@ -21,7 +23,7 @@ function BookDetails() {
     const { user, isAuthenticated } = useContext(AuthContext);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/books/${bookId}`)
+        bookService.details(bookId)
             .then(response => response.json())
             .then(bookData => {
                 setBook(bookData.book);
