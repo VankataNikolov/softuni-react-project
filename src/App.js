@@ -6,7 +6,7 @@ import BookDetails from './components/books/BookDetails';
 import BookCreate from './components/books/BookCreate'
 import BookEdit from './components/books/BookEdit';
 import HeaderApp from './components/common/HeaderApp/HeaderApp';
-import FooterApp from './components/common/FooterApp';
+import FooterApp from './components/common/FooterApp/FooterApp';
 import Register from './components/users/Register';
 import Login from './components/users/Login';
 import Profile from './components/users/Profile';

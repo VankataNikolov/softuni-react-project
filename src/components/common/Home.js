@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideMenu from "../books/SideMenu";
-import BookList from '../books/BookList';
+import BookList from '../books/BookList/BookList';
 
 function Home() {
     const [books, setBooks] = useState([]);
