@@ -1,5 +1,19 @@
 const baseUrl = 'http://localhost:5000/books';
 
+export const details = async (bookId) => {
+    try {
+        const response = await fetch(`${baseUrl}/${bookId}`, {
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const create = async (bookData, accessToken) => {
     try {
         const response = await fetch(`${baseUrl}`, {
