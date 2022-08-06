@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import FormHeader from '../common/FormHeader';
 
 import { Button, Form, Input } from 'antd';
 
@@ -11,16 +12,26 @@ function Register() {
 
     const navigate = useNavigate();
     const { userLogin } = useContext(AuthContext);
+    const [error, setError] = useState('');
 
     const onFinish = async (values) => {
         const { username, password } = values;
 
-        const response = await authService.register(username, password);
-        const user = await response.json();
+        try{
+            const response = await authService.register(username, password);
+            const user = await response.json();
+            if (user.message) {
+                console.log(user.message);
+                setError(user.message);
+                return;
+            }
+            userLogin(user);
+    
+            navigate("/", { replace: true });
+        }catch(err){
+            console.log(err);
+        }
 
-        userLogin(user);
-
-        navigate("/", { replace: true });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -28,6 +39,8 @@ function Register() {
     };
 
     return (
+        <>
+        <FormHeader title="Register" errorMessage={error}/>
         <Form
             name="register"
             labelCol={{
@@ -102,6 +115,7 @@ function Register() {
                 </Button>
             </Form.Item>
         </Form>
+        </>
     );
 }
 
