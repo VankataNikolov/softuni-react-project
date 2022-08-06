@@ -10,29 +10,29 @@ function HeaderApp() {
 
     const { isAuthenticated, user } = useContext(AuthContext);
 
+    const navLinkStyle = ({ isActive }) => (isActive ? styles.active : styles.inactive);
+
     const guestUserButtons = (
         <>
-            <NavLink to="/users/login" className={styles.link} >Login</NavLink>
-            <NavLink to="/users/register" className={styles.link} >Register</NavLink>
+            <NavLink to="/users/login" className={navLinkStyle} >Login</NavLink>
+            <NavLink to="/users/register" className={navLinkStyle} >Register</NavLink>
         </>
     )
 
     const authenticatedUserButtons = (
         <>
-            <NavLink to="/users/logout" className={styles.link} >Logout</NavLink>
-            <NavLink to="/books/create" className={styles.link} >Create book</NavLink>
-            <NavLink to={{ pathname: `/users/${user.userId}/profile` }} className={styles.link} >Profile</NavLink>
+            <NavLink to="/users/logout" className={navLinkStyle} >Logout</NavLink>
+            <NavLink to="/books/create" className={navLinkStyle} >Create book</NavLink>
+            <NavLink to={{ pathname: `/users/${user.userId}/profile` }} className={navLinkStyle} >Profile</NavLink>
         </>
     )
 
     return (
         <Header className="header">
             <Menu theme="dark" mode="horizontal" >
-                <div className={styles.topnav}>
-                    <NavLink to="/" className={styles.link}>Home</NavLink>
-                    {!isAuthenticated && guestUserButtons}
-                    {isAuthenticated && authenticatedUserButtons}
-                </div>
+                <NavLink to="/" className={navLinkStyle}>Home</NavLink>
+                {!isAuthenticated && guestUserButtons}
+                {isAuthenticated && authenticatedUserButtons}
             </Menu>
         </Header>
     );
