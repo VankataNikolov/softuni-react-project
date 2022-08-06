@@ -32,4 +32,4 @@ The users also can add comments to the books and reading them.
 
 1. [react router v6](https://reactrouter.com/docs/en/v6/getting-started/overview#quick-start-overview) - used router in application
 1. [ant design](https://ant.design/) - ready to use components and styling
-2. [rest server]() - node.js /express server for fetching data
+2. [rest server](https://github.com/VankataNikolov/rest-server-books.git) - node.js /express server with mongoDB for fetching data
