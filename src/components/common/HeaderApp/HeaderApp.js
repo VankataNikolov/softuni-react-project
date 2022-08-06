@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
+import styles from './HeaderApp.module.css';
 
 import { Layout, Menu } from 'antd';
 const { Header } = Layout;
@@ -9,36 +10,30 @@ function HeaderApp() {
 
     const { isAuthenticated, user } = useContext(AuthContext);
 
-    const items = [
-        {
-            key: 'home',
-            label: <Link to="/">Home</Link>,
-        },
-        !isAuthenticated ?{
-            key: 'login',
-            label: <Link to="/users/login">Login</Link>,
-        } : '',
-        !isAuthenticated ?{
-            key: 'register',
-            label: <Link to="/users/register">Register</Link>,
-        } : '',
-        isAuthenticated ? {
-            key: 'logout',
-            label: <Link to="/users/logout">Logout</Link>,
-        } : '',
-        isAuthenticated ? {
-            key: 'create book',
-            label: <Link to="/books/create">Create book</Link>,
-        } : '',
-        isAuthenticated ? {
-            key: 'profile',
-            label: <Link to={{ pathname: `/users/${user.userId}/profile` }}>Profile</Link>,
-        } : '',
+    const guestUserButtons = (
+        <>
+            <NavLink to="/users/login" className={styles.link} >Login</NavLink>
+            <NavLink to="/users/register" className={styles.link} >Register</NavLink>
+        </>
+    )
 
-    ];
+    const authenticatedUserButtons = (
+        <>
+            <NavLink to="/users/logout" className={styles.link} >Logout</NavLink>
+            <NavLink to="/books/create" className={styles.link} >Create book</NavLink>
+            <NavLink to={{ pathname: `/users/${user.userId}/profile` }} className={styles.link} >Profile</NavLink>
+        </>
+    )
+
     return (
         <Header className="header">
-            <Menu theme="dark" mode="horizontal" items={items} />
+            <Menu theme="dark" mode="horizontal" >
+                <div className={styles.topnav}>
+                    <NavLink to="/" className={styles.link}>Home</NavLink>
+                    {!isAuthenticated && guestUserButtons}
+                    {isAuthenticated && authenticatedUserButtons}
+                </div>
+            </Menu>
         </Header>
     );
 }
