@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import BookCreate from './BookCreate';
+import BookCreate from '../BookCreate';
 
 
 function BookEdit() {

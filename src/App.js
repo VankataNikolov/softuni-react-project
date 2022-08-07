@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './components/common/Home';
 import BookDetails from './components/books/BookDetails/BookDetails';
 import BookCreate from './components/books/BookCreate'
-import BookEdit from './components/books/BookEdit';
+import BookEdit from './components/books/BookEdit/BookEdit';
 import HeaderApp from './components/common/HeaderApp/HeaderApp';
 import FooterApp from './components/common/FooterApp/FooterApp';
 import Register from './components/users/Register';

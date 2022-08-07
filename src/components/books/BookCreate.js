@@ -58,6 +58,7 @@ function BookCreate(props) {
     return (
         <Form
             form={form}
+            name='bookForm'
             labelCol={{
                 span: 4,
             }}
