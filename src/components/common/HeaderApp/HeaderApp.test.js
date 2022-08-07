@@ -16,18 +16,18 @@ describe('show / not show buttons for guest users', () => {
     });
 
     test('show Login button', async () => {
-        const element = await screen.findByText('Login');
-        expect(element).toBeInTheDocument();
+        const element = await screen.findAllByText('Login');
+        expect(element[1]).toBeInTheDocument();
     });
 
     test('show Register button', async () => {
-        const element = await screen.findByText('Register');
-        expect(element).toBeInTheDocument();
+        const element = await screen.findAllByText('Register');
+        expect(element[1]).toBeInTheDocument();
     });
 
     test('show Home button', async () => {
-        const element = await screen.findByText('Home');
-        expect(element).toBeInTheDocument();
+        const element = await screen.findAllByText('Home');
+        expect(element[1]).toBeInTheDocument();
     });
 
     test('don\'t show Profile button', () => {
@@ -63,20 +63,20 @@ describe('show / not show buttons for authenticated users', () => {
 
     test('show Profile button', async () => {
 
-        const element = await screen.findByText('Profile');
-        expect(element).toBeInTheDocument();
+        const element = await screen.findAllByText('Profile');
+        expect(element[1]).toBeInTheDocument();
     });
 
     test('show Create book button', async () => {
 
-        const element = await screen.findByText('Create book');
-        expect(element).toBeInTheDocument();
+        const element = await screen.findAllByText('Create book');
+        expect(element[1]).toBeInTheDocument();
     });
 
     test('show Logout button', async () => {
 
-        const element = await screen.findByText('Logout');
-        expect(element).toBeInTheDocument();
+        const element = await screen.findAllByText('Logout');
+        expect(element[1]).toBeInTheDocument();
     });
 
     test('don\'t show Login button', () => {

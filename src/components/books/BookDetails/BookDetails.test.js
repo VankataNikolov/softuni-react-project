@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, toBeVisible } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import BookDetails from './BookDetails';
@@ -9,6 +9,17 @@ const buttonNames = {
     delete: "изтрий",
     comment: "коментар"
 }
+
+const notOwnerUser = {
+    _id: "123",
+    username: 'gosho'
+}
+
+const ownerUser = {
+    _id: "456",
+    username: 'vankata'
+}
+
 
 const bookData = {
     "book": {
@@ -31,6 +42,16 @@ const bookData = {
     "commentsData": []
 }
 
+const setUp = (authenticated, user) => {
+    render(
+        <BrowserRouter>
+            <AuthContext.Provider value={{ isAuthenticated: authenticated, user: user }}>
+                <BookDetails />
+            </AuthContext.Provider>
+        </BrowserRouter>
+    );
+}
+
 let originalFetch;
 
 beforeEach(() => {
@@ -50,36 +71,85 @@ describe("Testing BookDetails component", () => {
 
     test('Should have proper book title after data fetch', async () => {
 
-        render(
-            <BrowserRouter>
-                <AuthContext.Provider value={{ isAuthenticated: false, user: {} }}>
-                    <BookDetails />
-                </AuthContext.Provider>
-            </BrowserRouter>
-        );
+        setUp(false, {});
+
         const element = await screen.findByText(bookData.book.title);
         expect(element.textContent).toBe(bookData.book.title);
     });
 
 
     test('Should NOT have buttons for authenticated users', async () => {
-        render(
-            <BrowserRouter>
-                <AuthContext.Provider value={{ isAuthenticated: false, user: {} }}>
-                    <BookDetails />
-                </AuthContext.Provider>
-            </BrowserRouter>
-        );
+        setUp(false, {});
 
-        const editBtn = screen.queryByText(buttonNames.edit);
-        expect(editBtn).toBeNull;
-        const deleteBtn = screen.queryByText(buttonNames.delete);
-        expect(deleteBtn).toBeNull;
-        const commentBtn = screen.queryByText(buttonNames.comment);
-        expect(commentBtn).toBeNull;
-        const likeBtn = screen.queryByText(buttonNames.like);
-        expect(likeBtn).toBeNull;
+        await waitFor(() => {
+            const editBtn = screen.queryByText(buttonNames.edit);
+            expect(editBtn).toBeNull;
+        })
+
+        await waitFor(() => {
+            const deleteBtn = screen.queryByText(buttonNames.delete);
+            expect(deleteBtn).toBeNull;
+        })
+
+        await waitFor(() => {
+            const commentBtn = screen.queryByText(buttonNames.comment);
+            expect(commentBtn).toBeNull;
+        })
+
+        await waitFor(() => {
+            const likeBtn = screen.queryByText(buttonNames.like);
+            expect(likeBtn).toBeNull;
+        })
+
     });
+
+    test('Should have buttons for authenticated users and not owners', async () => {
+        setUp(true, notOwnerUser);
+
+        await waitFor(() => {
+            const editBtn = screen.queryByText(buttonNames.edit);
+            expect(editBtn).toBeNull;
+        });
+
+        await waitFor(() => {
+            const deleteBtn = screen.queryByText(buttonNames.delete);
+            expect(deleteBtn).toBeNull;
+        })
+
+        await waitFor(() => {
+            const commentBtn = screen.getByText(buttonNames.comment);
+            expect(commentBtn).toBeVisible();
+        });
+
+        await waitFor(() => {
+            const likeBtn = screen.getByText(buttonNames.like);
+            expect(likeBtn).toBeVisible();
+        });
+    });
+
+    test('show / not show buttons for owner user', async () => {
+        setUp(true, ownerUser);
+
+        await waitFor(() => {
+            const editBtn = screen.getByText(buttonNames.edit);
+            expect(editBtn).toBeVisible();
+        });
+
+        await waitFor(() => {
+            const deleteBtn = screen.getByText(buttonNames.delete);
+            expect(deleteBtn).toBeVisible();
+        })
+
+        await waitFor(() => {
+            const commentBtn = screen.queryByText(buttonNames.comment);
+            expect(commentBtn).toBeNull;
+        });
+
+        await waitFor(() => {
+            const likeBtn = screen.queryByText(buttonNames.like);
+            expect(likeBtn).toBeNull
+        });
+    })
 });
 
 
