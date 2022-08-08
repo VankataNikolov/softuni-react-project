@@ -7,12 +7,12 @@ import BookCreate from './components/books/BookCreate'
 import BookEdit from './components/books/BookEdit/BookEdit';
 import HeaderApp from './components/common/HeaderApp/HeaderApp';
 import FooterApp from './components/common/FooterApp/FooterApp';
-import Register from './components/users/Register';
-import Login from './components/users/Login';
+import Register from './components/users/Register/Register';
+import Login from './components/users/Login/Login';
 import Profile from './components/users/Profile';
 import Logout from './components/users/Logout'
 import AuthProvider from './contexts/AuthContext';
-import PrivateRoute from './components/common/PrivateRoute';
+import PrivateRoute from './components/common/PrivateRoute/PrivateRoute';
 
 import 'antd/dist/antd.min.css';
 

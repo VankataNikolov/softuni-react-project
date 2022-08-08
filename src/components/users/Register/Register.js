@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
-import FormHeader from '../common/FormHeader';
+import { AuthContext } from '../../../contexts/AuthContext';
+import FormHeader from '../../common/FormHeader';
 
 import { Button, Form, Input } from 'antd';
 
-import * as authService from '../../services/authService';
+import * as authService from '../../../services/authService';
 
 
 function Register() {
