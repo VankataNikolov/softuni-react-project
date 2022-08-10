@@ -149,7 +149,16 @@ function BookCreate(props) {
                     {
                         pattern: /^(?:\d*)$/,
                         message: "Year should be number",
-                    }
+                    },
+                    () => ({
+                        validator(_, value) {
+                            if (1900 <= value && value <= 2022) {
+                                return Promise.resolve();
+                            }
+
+                            return Promise.reject(new Error('Tne year should be between 1900 and 2022'));
+                        },
+                    })
                 ]}
             >
                 <Input />
